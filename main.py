@@ -1,4 +1,3 @@
-#imprt part
 import string
 import random
 
@@ -10,29 +9,31 @@ def users_input():
     return password,website
 
 def coding_password(password, printable):
+    coded_password = password
     for i in password:
         if i in printable:
             ind = printable.index(i)
             new_cara = printable[ind+2]
-        coded_password = password.replace(i,new_cara)
+        coded_password = coded_password.replace(i,new_cara)
     return coded_password
 
 def decoding_password(coded_password,printable):
+    user_password = coded_password
     for i in coded_password:
         if i in printable:
             ind = printable.index(i)
             new_cara = printable[ind-2]
-        user_password = password.replace(i,new_cara)
+        user_password = user_password.replace(i,new_cara)
     return user_password
 
-if __name__ == "__main__":
-    # coding_password("ui",printable)
+def put_password():
     password,website = users_input()
     coded_password=coding_password(password,printable)
     decode_password = decoding_password(coded_password,printable)
 
     print(f"the password is {password}, the associated website is {website}")
     print(f"the coded password is {coded_password}, the associated website is {website}")
+    print(f"the coded password is {decode_password}, the associated website is {website}")
 
 
 
@@ -46,7 +47,7 @@ rentrer un mot de passe avec un login ?\n""")
             loop += 1
             break
         if users_choice == "2":
-            password()
+            put_password()
             loop += 1
         else:
             print(f"""{users_choice} isn't a valid choice\n
