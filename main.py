@@ -1,7 +1,7 @@
 #imprt part
 import string
 import random
-
+import os
 #to get every caractere while coded the password
 letters = string.ascii_letters
 
@@ -21,11 +21,35 @@ def randomizing_password(password, letters):
     return password
 
 
-#main function
-if __name__ == "__main__":
-
+def password():
     password,website = users_input()
     coded_password=randomizing_password(password,letters)
 
     print(f"the password is {password}, the associated website is {website}")
     print(f"the coded password is {coded_password}, the associated website is {website}")
+
+
+
+def choices_users():
+    loop = 0
+    users_choice = input("""gérérer un mot de passe ?\n
+rentrer un mot de passe avec un login ?\n""")
+    while loop == 0:
+        if users_choice == "1":
+            print("please wait for this functionnality to be made")
+            loop += 1
+            break
+        if users_choice == "2":
+            password()
+            loop += 1
+        else:
+            print(f"""{users_choice} isn't a valid choice\n
+please choose a valid one""")
+            users_choice = input("""gérérer un mot de passe ?\n
+rentrer un mot de passe avec un login ?\n""")
+
+
+
+#main function
+if __name__ == "__main__":
+    choices_users()
