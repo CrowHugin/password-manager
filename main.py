@@ -2,24 +2,34 @@
 import string
 import random
 
-letters = string.printable
+printable = string.printable
 def users_input():
 
     password = input("rentrez votre mot de passe\n")
     website = input("rentrez le site associé svp\n")
     return password,website
 
-def randomizing_password(password, letters):
+def coding_password(password, printable):
     for i in password:
-        
-        one_letter = random.choice(letters)
-        password = password.replace(i,one_letter)
-    return password
+        if i in printable:
+            ind = printable.index(i)
+            new_cara = printable[ind+2]
+        coded_password = password.replace(i,new_cara)
+    return coded_password
 
+def decoding_password(coded_password,printable):
+    for i in coded_password:
+        if i in printable:
+            ind = printable.index(i)
+            new_cara = printable[ind-2]
+        user_password = password.replace(i,new_cara)
+    return user_password
 
-def password():
+if __name__ == "__main__":
+    # coding_password("ui",printable)
     password,website = users_input()
-    coded_password=randomizing_password(password,letters)
+    coded_password=coding_password(password,printable)
+    decode_password = decoding_password(coded_password,printable)
 
     print(f"the password is {password}, the associated website is {website}")
     print(f"the coded password is {coded_password}, the associated website is {website}")
