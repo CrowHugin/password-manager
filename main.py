@@ -1,12 +1,8 @@
 #imprt part
 import string
 import random
-import os
-#to get every caractere while coded the password
-letters = string.ascii_letters
 
-
-#defining the functions we need
+letters = string.printable
 def users_input():
 
     password = input("rentrez votre mot de passe\n")
