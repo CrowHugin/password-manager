@@ -1,6 +1,8 @@
 import string
 import random
 
+import csv
+import os
 printable = string.printable
 def users_input():
 
@@ -35,7 +37,7 @@ def put_password():
     print(f"the password is {password}, the associated website is {website}")
     print(f"the coded password is {coded_password}, the associated website is {website}")
     print(f"the coded password is {decode_password}, the associated website is {website}")
-
+    stockage(coded_password,website)
 
 
 def choices_users():
@@ -58,6 +60,15 @@ rentrer un mot de passe avec un login ?\n""")
 
 
 
+def stockage(mdp,website):
+    excel_file = "stockage/stock.xls"
+    # print(mdp,website)
+    with open('stockage/stock.csv', 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=',')
+        writer.writerow(["mdp", "website"])
+        writer.writerows([mdp,website ])
+
 #main function
 if __name__ == "__main__":
     choices_users()
+    stockage("mot de passe","website")
