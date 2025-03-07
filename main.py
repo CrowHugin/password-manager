@@ -17,6 +17,7 @@ def coding_password(password, table):
             ind = table.index(cara)
             coded_password_list.append(table[ind+2])
     coded_password = "".join(coded_password_list)
+    print(coded_password)
     return coded_password
 
 def decoding_password(coded_password,printable):
@@ -26,18 +27,18 @@ def decoding_password(coded_password,printable):
             ind = printable.index(i)
             new_cara = printable[ind-2]
         user_password = user_password.replace(i,new_cara)
-    print(user_password)
     return user_password
 
 def put_password():
     password,website = users_input()
     coded_password=coding_password(password,printable)
+    stockage(coded_password,website)
     decode_password = decoding_password(coded_password,printable)
 
-    print(f"the password is {password}, the associated website is {website}")
-    print(f"the coded password is {coded_password}, the associated website is {website}")
-    print(f"the coded password is {decode_password}, the associated website is {website}")
-    stockage(coded_password,website)
+    # print(f"the password is {password}, the associated website is {website}")
+    # print(f"the coded password is {coded_password}, the associated website is {website}")
+    # print(f"the coded password is {decode_password}, the associated website is {website}")
+    
 
 
 def choices_users():
@@ -61,14 +62,18 @@ rentrer un mot de passe avec un login ?\n""")
 
 
 def stockage(mdp,website):
-    excel_file = "stockage/stock.xls"
+    csv_file = "stockage/stock.csv"
     # print(mdp,website)
-    with open('stockage/stock.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=',')
-        writer.writerow(["mdp", "website"])
-        writer.writerows([mdp,website ])
+    if not os.path.exists(csv_file):
+        with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
+            writer = csv.writer(file, delimiter=',')
+            writer.writerow(["mdp", "website"])
+            file.write(f"{mdp},{website}")
+    else:
+        with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
+            file.write(f"\n{mdp},{website}")
+
 
 #main function
 if __name__ == "__main__":
     choices_users()
-    stockage("mot de passe","website")
