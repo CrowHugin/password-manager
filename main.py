@@ -8,13 +8,13 @@ def users_input():
     website = input("rentrez le site associé svp\n")
     return password,website
 
-def coding_password(password, printable):
-    coded_password = password
-    for i in password:
-        if i in printable:
-            ind = printable.index(i)
-            new_cara = printable[ind+2]
-        coded_password = coded_password.replace(i,new_cara)
+def coding_password(password, table):
+    coded_password_list = []
+    for cara in password:
+        if cara in table:
+            ind = table.index(cara)
+            coded_password_list.append(table[ind+2])
+    coded_password = "".join(coded_password_list)
     return coded_password
 
 def decoding_password(coded_password,printable):
@@ -24,6 +24,7 @@ def decoding_password(coded_password,printable):
             ind = printable.index(i)
             new_cara = printable[ind-2]
         user_password = user_password.replace(i,new_cara)
+    print(user_password)
     return user_password
 
 def put_password():
