@@ -1,9 +1,10 @@
-from ressources import users, password, code,stockage
+# from ressources import users, password, code,stockage
+import oop
+import oop.ressources 
 
+import string
+printable = string.printable
 
 #main function
 if __name__ == "__main__":
-    users.choices_users()
-#     print(f"the password is {password}, the associated website is {website}")
-#     print(f"the coded password is {coded_password}, the associated website is {website}")
-#     print(f"the coded password is {decode_password}, the associated website is {website}")
+    oop.ressources.users.choices_users(printable)
