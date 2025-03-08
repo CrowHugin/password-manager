@@ -1,14 +1,11 @@
 
 import unittest
-import main
-from main import users_input, randomizing_password
-
+from main import *
 #phase testing
-class Test_result:
-    def input_test(self):
-        test = "ui","google"
-        print(test)
-        # self.assertEqual()
+class Test_result(unittest.TestCase):
+    def test_coding(self):
+        code = self.coding_password("azerty","google.com")
+        self.assertEqual(code,"cBgtvA")
 
 if __name__ == "__main__":
-    Test_result.input_test()
+    unittest.main
