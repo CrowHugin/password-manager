@@ -1,0 +1,17 @@
+#! usr/bin/ python3
+
+variables:
+
+image: python3.13.2
+
+before scritp:
+    - pip import pylint
+test:
+  tags:
+    - docker
+  script:
+    - ./main.py
+    - ./test_fontions.py
+
+    - pylint ./main.py
+    - pylint ./test_fonctions.py
