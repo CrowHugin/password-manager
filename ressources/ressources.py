@@ -1,5 +1,6 @@
 import string
 import random
+import sys
 import csv
 import os
 
@@ -70,3 +71,35 @@ class stockage:
         if os.path.exists(csv_file):
             with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
                 file.write(f"\n{mdp},{website}")
+
+class password_crea():
+    def input_user():
+            long = input("How much caratere will be your password ?\n")
+            try:
+                long = int(long)
+            except ValueError:
+                print("Please be sure to choose a number")
+                sys.exit()
+                
+            return long
+                
+                
+    def check_input(length):
+        if length > 20 or 0 > length: 
+            print("The password cannot be longer than 20 caratere\nplease retry\n")
+        else:
+            return True
+    
+    def looping():
+        loop = 1
+        longueur = password_crea.input_user()
+        while loop == 1:
+            if password_crea.check_input(longueur):
+                print(f"The password is {longueur} caratere long")
+                loop += 1
+            else:
+                longueur = password_crea.input_user()
+                
+        
+if "__main__" == __name__:
+    password_crea.looping()
