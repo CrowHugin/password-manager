@@ -57,12 +57,16 @@ class code():
     
 class stockage:
     def stockage(mdp,website):
-        csv_file = "stockage/stock.csv"
+        csv_file = "./stockage/stock.csv"
+
+        if not os.path.exists("stockage"):
+            os.system("mkdir ./stockage")
+        
         if not os.path.exists(csv_file):
             with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "website"])
                 file.write(f"{mdp},{website}")
-        else:
+        if os.path.exists(csv_file):
             with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
                 file.write(f"\n{mdp},{website}")
