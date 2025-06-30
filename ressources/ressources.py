@@ -37,6 +37,16 @@ rentrer un mot de passe avec un login ?\n""")
         website = input("rentrez le site associé svp\n")
         return password,website
 
+    def create(printable,lenght):
+        liste = []
+        
+        i = 0
+        while i  < lenght:
+            liste.append(random.choice(printable))
+            i +=1
+        return liste
+
+
 class code():
     def coding_password(password, table):
         coded_password_list = []

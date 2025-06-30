@@ -2,6 +2,7 @@
 from ressources.ressources import password, view
 import argparse
 import string
+import os
 printable = string.printable
 
 
@@ -16,8 +17,8 @@ def parsing():
                         action = "store_true")
 
     parser.add_argument("-create",
-                        help = "to view smth",
-                        action = "store_true")
+                        help = "to enable the creation od the password, put here your password lenght",
+                        action = "store")
 
     parser.add_argument("-email",
                         help = "to put an email",
@@ -41,4 +42,7 @@ if __name__ == "__main__":
         password.put_password(printable, args.email, args.password)
 
     if args.create:
-        print("create")
+        lenght = int(args.create)
+        passe = password.create(printable,lenght)
+        os.path.join(lenght, "")
+        print(passe)
