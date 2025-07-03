@@ -1,3 +1,5 @@
+#! /bin/python3
+
 from ressources import ressources
 import unittest
 import string
