@@ -1,6 +1,3 @@
-./stockage
-./gitignore
-__package__
-.pytest_cache
-.vscode
-*.pyc
+stockage
+.gitignore
+ressources/__pycache__

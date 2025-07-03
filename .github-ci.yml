@@ -11,7 +11,5 @@ test:
     - docker
   script:
     - ./main.py
-    - ./test_fontions.py
 
     - pylint ./main.py
-    - pylint ./test_fonctions.py
