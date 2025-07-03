@@ -8,10 +8,9 @@ import os
 
 
 class password:
-    def put_password(printable):
-        password,website = users.users_input()
-        coded_password=code.coding_password(password,printable)
-        stockage.stockage(coded_password,website)
+    def put_password(printable, email, mdp):
+        coded_password=code.coding_password(mdp,printable)
+        stockage.stockage(coded_password,email)
         decode_password = code.decoding_password(coded_password,printable)
 
 class users:
@@ -112,6 +111,9 @@ class password_crea():
             else:
                 longueur = password_crea.input_user()
                 
-        
-if "__main__" == __name__:
-    password_crea.looping()
+class view():
+    def viewing(table, email):
+        if not os.path.exists("stockage"):
+            print("There's an issue, be sure to have a stockage file")
+        else:
+            print(email)
