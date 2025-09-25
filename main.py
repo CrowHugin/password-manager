@@ -4,6 +4,7 @@
 from ressources.ressources import password, view
 import argparse
 import string
+import sys
 import os
 printable = string.printable
 
@@ -34,16 +35,32 @@ def parsing():
 
     arguments = parser.parse_args()
     return arguments
+
+def check(email,password):
+    if email and password:
+        return True
+    else:
+        return False
+    
+
+
 #main function
 if __name__ == "__main__":
     args = parsing()
     if args.view:
-        view.viewing(printable, args.email)
+        if check(args.email,"password") == True:
+            view.viewing(printable, args.email)
+        else:
+            print("ERROR: Missing required email")
   
-    if args.add:
-        password.put_password(printable, args.email, args.password)
+    elif args.add:
+        if check(args.email, args.password) == True:
+            password.put_password(printable, args.email, args.password)
+        else:
+            print("ERROR: email or password not found")
+            sys.exit()
 
-    if args.create:
+    elif args.create:
         lenght = int(args.create)
         passe = password.create(printable,lenght)
         os.path.join(lenght, "")
