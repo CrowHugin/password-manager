@@ -65,3 +65,8 @@ if __name__ == "__main__":
         passe = password.create(printable,lenght)
         os.path.join(lenght, "")
         print(passe)
+    
+
+
+    else:
+        print("ERROR: use -view, -add or -create with -email and/or -password")
