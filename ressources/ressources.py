@@ -1,14 +1,16 @@
+#! /bin/python3
+
 import string
 import random
+import sys
 import csv
 import os
 
 
 class password:
-    def put_password(printable):
-        password,website = users.users_input()
-        coded_password=code.coding_password(password,printable)
-        stockage.stockage(coded_password,website)
+    def put_password(printable, email, mdp):
+        coded_password=code.coding_password(mdp,printable)
+        stockage.stockage(coded_password,email)
         decode_password = code.decoding_password(coded_password,printable)
 
 class users:
@@ -36,6 +38,16 @@ rentrer un mot de passe avec un login ?\n""")
         website = input("rentrez le site associé svp\n")
         return password,website
 
+    def create(printable,lenght):
+        liste = []
+        
+        i = 0
+        while i  < lenght:
+            liste.append(random.choice(printable))
+            i +=1
+        return liste
+
+
 class code():
     def coding_password(password, table):
         coded_password_list = []
@@ -57,12 +69,59 @@ class code():
     
 class stockage:
     def stockage(mdp,website):
-        csv_file = "stockage/stock.csv"
+        csv_file = "./stockage/stock.csv"
+
+        if not os.path.exists("stockage"):
+            os.system("mkdir ./stockage")
+        
         if not os.path.exists(csv_file):
             with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "website"])
                 file.write(f"{mdp},{website}")
-        else:
+        if os.path.exists(csv_file):
             with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
                 file.write(f"\n{mdp},{website}")
+
+class password_crea():
+    def input_user():
+            long = input("How much caratere will be your password ?\n")
+            try:
+                long = int(long)
+            except ValueError:
+                print("Please be sure to choose a number")
+                sys.exit()
+                
+            return long
+                
+                
+    def check_input(length):
+        if length > 20 or 0 > length: 
+            print("The password cannot be longer than 20 caratere\nplease retry\n")
+        else:
+            return True
+    
+    def looping():
+        loop = 1
+        longueur = password_crea.input_user()
+        while loop == 1:
+            if password_crea.check_input(longueur):
+                print(f"The password is {longueur} caratere long")
+                loop += 1
+            else:
+                longueur = password_crea.input_user()
+                
+class view():    
+    def viewing(table, email):
+        csv_file = "./stockage/stock.csv"
+        if not os.path.exists("stockage"):
+            print("ERROR: make sure to have a stockage file")
+            sys.exit()
+        else:
+            with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                for i in file:
+                    if email in i:
+                        split = i.split(",")
+                        passwrd = split[0] 
+                        passw = code.decoding_password(passwrd,table)
+                        print(f"{email} {passw}")
