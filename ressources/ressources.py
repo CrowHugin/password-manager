@@ -111,9 +111,17 @@ class password_crea():
             else:
                 longueur = password_crea.input_user()
                 
-class view():
+class view():    
     def viewing(table, email):
+        csv_file = "./stockage/stock.csv"
         if not os.path.exists("stockage"):
-            print("There's an issue, be sure to have a stockage file")
+            print("ERROR: make sure to have a stockage file")
+            sys.exit()
         else:
-            print(email)
+            with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                for i in file:
+                    if email in i:
+                        split = i.split(",")
+                        passwrd = split[0] 
+                        passw = code.decoding_password(passwrd,table)
+                        print(f"{email} {passw}")
