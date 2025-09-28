@@ -11,23 +11,28 @@ printable = string.printable
 
 def parsing():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-view",
+    parser.add_argument("--view",
+                        "-v",
                         help = "to view a password with the email or website",
                         action = "store_true")
 
-    parser.add_argument("-add",
+    parser.add_argument("--add",
+                        "-a",
                         help = "to add an email and a password",
                         action = "store_true")
 
-    parser.add_argument("-create",
+    parser.add_argument("--create",
+                        "-c",
                         help = "to enable the creation od the password, put here your password lenght",
                         action = "store")
 
-    parser.add_argument("-email",
+    parser.add_argument("--email",
+                        "-em",
                         help = "to put an email",
                         action = "store")
 
-    parser.add_argument("-password",
+    parser.add_argument("--password",
+                        "-p",
                         help = "to put a password",
                         action = "store")
 
