@@ -35,14 +35,18 @@ def parsing():
                         "-p",
                         help = "to put a password",
                         action = "store")
-
+    
+    parser.add_argument("--website",
+                        "-w",
+                        help = "Put a website here",
+                        action = "store")
 
 
     arguments = parser.parse_args()
     return arguments
 
-def check(email,password):
-    if email and password:
+def check(email,password,website):
+    if email and password and website:
         return True
     else:
         return False
@@ -53,16 +57,26 @@ def check(email,password):
 if __name__ == "__main__":
     args = parsing()
     if args.view:
-        if check(args.email,"password") == True:
-            view.viewing(printable, args.email)
+        if check(args.email,"password",args.website) == True:
+            view.viewing(printable, args.email, args.website)
         else:
-            print("ERROR: Missing required email")
-  
+            if not args.email:
+                print("ERROR: Missing required email")
+            elif not args.website:
+                print("ERROR: Missing required website")
+            sys.exit()
+
     elif args.add:
-        if check(args.email, args.password) == True:
-            password.put_password(printable, args.email, args.password)
+        if check(args.email, args.password, args.website) == True:
+            password.put_password(printable, args.email, args.password, 
+                                  args.website)
         else:
-            print("ERROR: email or password not found")
+            if not args.email:
+                print("ERROR: Missing required email")
+            elif not args.website:
+                print("ERROR: Missing required website") 
+            elif not args.password:
+                print("ERROR: Missing required password")
             sys.exit()
 
     elif args.create:
@@ -73,4 +87,7 @@ if __name__ == "__main__":
 
 
     else:
-        print("ERROR: use -view, -add or -create with -email and/or -password")
+        print("""ERROR: 
+    use --view (-v), --add (-a) or --create (-c)
+    with the following options:
+        --email(-em), --password (-p) and/or --website (-w)""")
