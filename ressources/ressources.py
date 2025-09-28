@@ -119,11 +119,35 @@ class view():
             print("ERROR: make sure to have a stockage file")
             sys.exit()
         else:
-            with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
-                for i in file:
-                    if email in i:
-                        split = i.split(",")
-                        passwrd = split[0]
-                        wbst = split[2]
-                        passw = code.decoding_password(passwrd,table)
-                        print(f"{email} {website} {passw}")
+            #if email isn't put
+            if email == "pass":
+                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                    for i in file:
+                        if website in i:
+                            split = i.split(",")
+                            passwrd = split[0]
+                            mail = split[1]
+                            passw = code.decoding_password(passwrd,table)
+                            print(f"{mail} {website} {passw}")
+
+            #if website isn't put
+            elif website == "pass":
+                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                    for i in file:
+                        if email in i:
+                            split = i.split(",")
+                            passwrd = split[0]
+                            wbst = split[2]
+                            passw = code.decoding_password(passwrd,table)
+                            print(f"{email} {wbst} {passw}")
+
+            else:
+                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                    for i in file:
+                        if email in i and website in i:
+                            split = i.split(",")
+                            passwrd = split[0]
+                            mail = split[1]
+                            wbst = split[2]
+                            passw = code.decoding_password(passwrd, table)
+                            print(f"{mail} {wbst} {passw}")
