@@ -60,11 +60,16 @@ if __name__ == "__main__":
         if check(args.email,"password",args.website) == True:
             view.viewing(printable, args.email, args.website)
         else:
-            if not args.email:
-                print("ERROR: Missing required email")
-            elif not args.website:
-                print("ERROR: Missing required website")
-            sys.exit()
+            if not args.email and args.website:
+                print(f"Showing info for {args.website}")
+                view.viewing(printable,"pass", args.website)
+            elif not args.website and args.email:
+                print(f"Showing info for {args.email}")
+                view.viewing(printable,args.email, "pass")
+            else:
+                print("""ERROR:
+Please provide --email or --password with --view""")
+                sys.exit()
 
     elif args.add:
         if check(args.email, args.password, args.website) == True:
