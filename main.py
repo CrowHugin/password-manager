@@ -64,7 +64,6 @@ if __name__ == "__main__":
         lenght = int(args.create)
         passe = password.create(printable,lenght)
         os.path.join(lenght, "")
-        print(passe)
     
 
 
