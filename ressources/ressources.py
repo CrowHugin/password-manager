@@ -8,9 +8,9 @@ import os
 
 
 class password:
-    def put_password(printable, email, mdp):
+    def put_password(printable, email, mdp, website):
         coded_password=code.coding_password(mdp,printable)
-        stockage.stockage(coded_password,email)
+        stockage.stockage(coded_password,email,website)
         decode_password = code.decoding_password(coded_password,printable)
 
 class users:
@@ -68,7 +68,7 @@ class code():
         return user_password
     
 class stockage:
-    def stockage(mdp,website):
+    def stockage(mdp, email, website):
         csv_file = "./stockage/stock.csv"
 
         if not os.path.exists("stockage"):
@@ -78,10 +78,10 @@ class stockage:
             with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "website"])
-                file.write(f"{mdp},{website}")
+                file.write(f"{mdp},{email},{website}")
         if os.path.exists(csv_file):
             with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
-                file.write(f"\n{mdp},{website}")
+                file.write(f"\n{mdp},{email},{website}")
 
 class password_crea():
     def input_user():
@@ -97,7 +97,8 @@ class password_crea():
                 
     def check_input(length):
         if length > 20 or 0 > length: 
-            print("The password cannot be longer than 20 caratere\nplease retry\n")
+            print("The password cannot be longer than 20 caratere\
+             please retry\n")
         else:
             return True
     
@@ -112,7 +113,7 @@ class password_crea():
                 longueur = password_crea.input_user()
                 
 class view():    
-    def viewing(table, email):
+    def viewing(table, email, website):
         csv_file = "./stockage/stock.csv"
         if not os.path.exists("stockage"):
             print("ERROR: make sure to have a stockage file")
@@ -122,6 +123,7 @@ class view():
                 for i in file:
                     if email in i:
                         split = i.split(",")
-                        passwrd = split[0] 
+                        passwrd = split[0]
+                        wbst = split[2]
                         passw = code.decoding_password(passwrd,table)
-                        print(f"{email} {passw}")
+                        print(f"{email} {website} {passw}")
