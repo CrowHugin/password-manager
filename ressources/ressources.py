@@ -80,10 +80,18 @@ class stockage:
 
             with open(f"{csv_file}/stock.csv", 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
+<<<<<<< HEAD
                 writer.writerow(["mdp", "website"])
                 file.write(f"{mdp},{email},{website}")
 
 
+=======
+                writer.writerow(["mdp", "email", "website"])
+                file.write(f"{mdp},{email},{website}\n")
+        if os.path.exists(csv_file):
+            with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
+                file.write(f"{mdp},{email},{website}\n")
+>>>>>>> 16c9648 (Create read_file function and some cleaning)
 
 class password_crea():
     def input_user():
@@ -115,6 +123,17 @@ class password_crea():
                 longueur = password_crea.input_user()
                 
 class view():    
+    def read_file(file, variable, prtable):
+        with open(file, 'r', newline='',encoding="UTF-8") as file:
+            for i in file:
+                if variable in i:
+                    split = i.split(",")
+                    passwrd = split[0]
+                    mail = split[1]
+                    wbst = split[2].replace("\n"," ")
+                    passw = code.decoding_password(passwrd,prtable)
+                    print(f"mail: {mail}; website: {wbst}; password: {passw}")
+
     def viewing(table, email, website):
         csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
         if not os.path.exists("stockage"):
@@ -123,23 +142,14 @@ class view():
         else:
             #if email isn't put
             if email == "pass":
-               var = website  
+                var = website  
 
             #if website isn't put
             elif website == "pass":
                 var = email
-                
+ 
+            #if both of them are put
             else:
-                var = f"{email},{website}" 
+                var = f"{email},{website}"
 
-
-
-            with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
-                for i in file:
-                    if var in i:
-                        split = i.split(",")
-                        passwrd = split[0]
-                        mail = split[1]
-                        wbst = split[2]
-                        passw = code.decoding_password(passwrd,table)
-                        print(f"{mail} {wbst} {passw}")
+            view.read_file(csv_file, var, table)
