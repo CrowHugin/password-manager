@@ -123,33 +123,23 @@ class view():
         else:
             #if email isn't put
             if email == "pass":
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if website in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            mail = split[1]
-                            passw = code.decoding_password(passwrd,table)
-                            print(f"{mail} {website} {passw}")
+               var = website  
 
             #if website isn't put
             elif website == "pass":
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if email in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            wbst = split[2]
-                            passw = code.decoding_password(passwrd,table)
-                            print(f"{email} {wbst} {passw}")
-
+                var = email
+                
             else:
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if email in i and website in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            mail = split[1]
-                            wbst = split[2]
-                            passw = code.decoding_password(passwrd, table)
-                            print(f"{mail} {wbst} {passw}")
+                var = f"{email},{website}" 
+
+
+
+            with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                for i in file:
+                    if var in i:
+                        split = i.split(",")
+                        passwrd = split[0]
+                        mail = split[1]
+                        wbst = split[2]
+                        passw = code.decoding_password(passwrd,table)
+                        print(f"{mail} {wbst} {passw}")
