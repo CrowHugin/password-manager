@@ -88,6 +88,7 @@ Please provide --email or --password with --view""")
         lenght = int(args.create)
         passe = users.create(printable,lenght)
         passe = "".join(passe)
+        print(passe)
     
 
 
