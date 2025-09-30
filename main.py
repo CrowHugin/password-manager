@@ -1,7 +1,7 @@
 #! /bin/python3
 
 # from ressources import users, password, code,stockage
-from ressources.ressources import password, view
+from ressources.ressources import password, view, users
 import argparse
 import string
 import sys
@@ -86,8 +86,8 @@ Please provide --email or --password with --view""")
 
     elif args.create:
         lenght = int(args.create)
-        passe = password.create(printable,lenght)
-        os.path.join(lenght, "")
+        passe = users.create(printable,lenght)
+        passe = "".join(passe)
     
 
 

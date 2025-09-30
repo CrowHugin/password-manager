@@ -45,6 +45,16 @@ rentrer un mot de passe avec un login ?\n""")
         while i  < lenght:
             liste.append(random.choice(printable))
             i +=1
+
+        carac = ["\x0b","\n","\\","\t"]
+        for i in liste:
+            if i in carac:
+                index_ = liste.index(i)
+                print(index_)
+                liste[index_] = random.choice(printable)
+
+
+
         return liste
 
 
