@@ -117,6 +117,7 @@ class password_crea():
                 
 class view():    
     def read_file(file, variable, prtable,wnt_srch):
+        liste = []
         with open(file, 'r', newline='',encoding="UTF-8") as file:
             for i in file:
                 if variable in i:
@@ -126,11 +127,19 @@ class view():
                     wbst = split[2].replace("\n"," ")
                     passw = code.decoding_password(passwrd,prtable)
                     if wnt_srch == "email":
-                        print(f"website: {wbst}; password: {passw}")
+                        liste.append(wbst)
+                        liste.append(passw)
+
                     elif wnt_srch == "website":
-                        print(f"email: {mail}; password: {passw}")
+                        liste.append(mail)
+                        liste.append(passw)
                     elif wnt_srch == "both":
-                        print(f"password: {passw}")
+                        liste.append(passw)
+
+            for j in liste:
+                print(j)
+
+
 
     def viewing(table, email, website):
         csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
@@ -141,7 +150,9 @@ class view():
             #if email isn't put
             if email == "pass":
                 var = website  
-                search = "website"            #if website isn't put
+                search = "website"            
+           
+            #if website isn't put
             elif website == "pass":
                 var = email
                 search = "email"
