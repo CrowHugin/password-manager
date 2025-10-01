@@ -69,19 +69,23 @@ class code():
     
 class stockage:
     def stockage(mdp, email, website):
-        csv_file = "./stockage/stock.csv"
+        csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
+        print(csv_file)
+        print(os.path.exists(csv_file))
 
-        if not os.path.exists("stockage"):
-            os.system("mkdir ./stockage")
-        
+        if os.path.exists(csv_file):
+            with open(f"{csv_file}/stock.csv", 'a', newline='', encoding="UTF-8") as file:
+                file.write(f"\n{mdp},{email},{website}")
+
         if not os.path.exists(csv_file):
-            with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
+            os.system(f"mkdir -p {csv_file}")
+
+            with open(f"{csv_file}/stock.csv", 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "website"])
                 file.write(f"{mdp},{email},{website}")
-        if os.path.exists(csv_file):
-            with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
-                file.write(f"\n{mdp},{email},{website}")
+
+
 
 class password_crea():
     def input_user():
