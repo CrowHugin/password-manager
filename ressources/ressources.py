@@ -11,36 +11,10 @@ class password:
     def put_password(printable, email, mdp, website):
         coded_password=code.coding_password(mdp,printable)
         stockage.stockage(coded_password,email,website)
-        decode_password = code.decoding_password(coded_password,printable)
 
 class users:
-    def choices_users(table):
-        loop = 0
-        users_choice = input("""gérérer un mot de passe ?\n
-rentrer un mot de passe avec un login ?\n""")
-        while loop == 0:
-            if users_choice == "1":
-                print("please wait for this functionnality to be made")
-                loop += 1
-                break
-            if users_choice == "2":
-                password.put_password(table)
-                loop += 1
-            else:
-                print(f"""{users_choice} isn't a valid choice\n
-    please choose a valid one""")
-                users_choice = input("""gérérer un mot de passe ?\n
-    rentrer un mot de passe avec un login ?\n""")
-
-
-    def users_input():
-        password = input("rentrez votre mot de passe\n")
-        website = input("rentrez le site associé svp\n")
-        return password,website
-
     def create(printable,lenght):
         liste = []
-        
         i = 0
         while i  < lenght:
             liste.append(random.choice(printable))
@@ -48,6 +22,24 @@ rentrer un mot de passe avec un login ?\n""")
 
         return liste
 
+    def save_info():
+        loop = True
+        ans = input("Would you like to save it ?\nY or N\n")
+
+        while loop:
+            if ans == "Y" or ans == "y":
+                eml = input("With which email adress?\n")
+                wbsti = input("on which website?\n")
+                loop = False
+                return eml, wbsti
+
+            elif ans == "N" or ans == "n":
+                print("Please ensure to copy the password")
+                return None, None
+                loop = False
+
+            else:
+                ans = input("Please be sure to put an answer\n")
 
 class code():
     def coding_password(password, table):

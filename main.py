@@ -92,7 +92,10 @@ Please provide --email or --password with --view""")
         lenght = int(args.create)
         passe = users.create(printable,lenght)
         passe = "".join(passe)
-        print(passe)
+        print(f"password: {passe}")
+        email, wbsti = users.save_info()
+        if check(email,passe,wbsti) == True:
+            password.put_password(printable,email,passe,wbsti)
     
 
 
