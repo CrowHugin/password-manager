@@ -6,7 +6,11 @@ import argparse
 import string
 import sys
 import os
-printable = string.printable
+
+
+#remove tabs, newlines, carriage returns, vertical tab, form feed, and space.
+to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
+printable = ''.join(ch for ch in string.printable if ch not in to_remove)
 
 
 def parsing():
