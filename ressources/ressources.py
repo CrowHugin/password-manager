@@ -74,10 +74,7 @@ class stockage:
             with open(f"{csv_file}/stock.csv", 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "email", "website"])
-                file.write(f"{mdp},{email},{website}\n")
-        if os.path.exists(csv_file):
-            with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
-                file.write(f"{mdp},{email},{website}\n")
+                file.write(f"\n{mdp},{email},{website}")
 
 class password_crea():
     def input_user():
@@ -111,7 +108,7 @@ class password_crea():
 class view():    
     def read_file(file, variable, prtable,wnt_srch):
         liste = []
-        with open(file, 'r', newline='',encoding="UTF-8") as file:
+        with open(f"{file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
             for i in file:
                 if variable in i:
                     split = i.split(",")
