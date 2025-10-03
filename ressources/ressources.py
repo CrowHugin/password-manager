@@ -133,7 +133,7 @@ class view():
 
     def viewing(table, email, website):
         csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
-        if not os.path.exists("stockage"):
+        if not os.path.exists("stockage"): #maybe need to change it later
             print("ERROR: make sure to have a stockage file")
             sys.exit()
         else:
