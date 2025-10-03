@@ -70,8 +70,6 @@ class code():
 class stockage:
     def stockage(mdp, email, website):
         csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
-        print(csv_file)
-        print(os.path.exists(csv_file))
 
         if os.path.exists(csv_file):
             with open(f"{csv_file}/stock.csv", 'a', newline='', encoding="UTF-8") as file:
