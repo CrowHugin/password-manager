@@ -1,12 +1,16 @@
 #! /bin/python3
 
 # from ressources import users, password, code,stockage
-from ressources.ressources import password, view
+from ressources.ressources import password, view, users
 import argparse
 import string
 import sys
 import os
-printable = string.printable
+
+
+#remove tabs, newlines, carriage returns, vertical tab, form feed, and space.
+to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
+printable = ''.join(ch for ch in string.printable if ch not in to_remove)
 
 
 def parsing():
@@ -86,8 +90,12 @@ Please provide --email or --password with --view""")
 
     elif args.create:
         lenght = int(args.create)
-        passe = password.create(printable,lenght)
-        os.path.join(lenght, "")
+        passe = users.create(printable,lenght)
+        passe = "".join(passe)
+        print(f"password: {passe}")
+        email, wbsti = users.save_info()
+        if check(email,passe,wbsti) == True:
+            password.put_password(printable,email,passe,wbsti)
     
 
 

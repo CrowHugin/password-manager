@@ -11,42 +11,35 @@ class password:
     def put_password(printable, email, mdp, website):
         coded_password=code.coding_password(mdp,printable)
         stockage.stockage(coded_password,email,website)
-        decode_password = code.decoding_password(coded_password,printable)
 
 class users:
-    def choices_users(table):
-        loop = 0
-        users_choice = input("""gérérer un mot de passe ?\n
-rentrer un mot de passe avec un login ?\n""")
-        while loop == 0:
-            if users_choice == "1":
-                print("please wait for this functionnality to be made")
-                loop += 1
-                break
-            if users_choice == "2":
-                password.put_password(table)
-                loop += 1
-            else:
-                print(f"""{users_choice} isn't a valid choice\n
-    please choose a valid one""")
-                users_choice = input("""gérérer un mot de passe ?\n
-    rentrer un mot de passe avec un login ?\n""")
-
-
-    def users_input():
-        password = input("rentrez votre mot de passe\n")
-        website = input("rentrez le site associé svp\n")
-        return password,website
-
     def create(printable,lenght):
         liste = []
-        
         i = 0
         while i  < lenght:
             liste.append(random.choice(printable))
             i +=1
+
         return liste
 
+    def save_info():
+        loop = True
+        ans = input("Would you like to save it ?\nY or N\n")
+
+        while loop:
+            if ans == "Y" or ans == "y":
+                eml = input("With which email adress?\n")
+                wbsti = input("on which website?\n")
+                loop = False
+                return eml, wbsti
+
+            elif ans == "N" or ans == "n":
+                print("Please ensure to copy the password")
+                return None, None
+                loop = False
+
+            else:
+                ans = input("Please be sure to put an answer\n")
 
 class code():
     def coding_password(password, table):
@@ -80,10 +73,8 @@ class stockage:
 
             with open(f"{csv_file}/stock.csv", 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
-                writer.writerow(["mdp", "website"])
-                file.write(f"{mdp},{email},{website}")
-
-
+                writer.writerow(["mdp", "email", "website"])
+                file.write(f"\n{mdp},{email},{website}")
 
 class password_crea():
     def input_user():
@@ -115,41 +106,51 @@ class password_crea():
                 longueur = password_crea.input_user()
                 
 class view():    
+    def read_file(file, variable, prtable,wnt_srch):
+        liste = []
+        with open(f"{file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
+            for i in file:
+                if variable in i:
+                    split = i.split(",")
+                    passwrd = split[0]
+                    mail = split[1]
+                    wbst = split[2].replace("\n"," ")
+                    passw = code.decoding_password(passwrd,prtable)
+                    if wnt_srch == "email":
+                        liste.append(wbst)
+                        liste.append(passw)
+
+                    elif wnt_srch == "website":
+                        liste.append(mail)
+                        liste.append(passw)
+                    elif wnt_srch == "both":
+                        liste.append(passw)
+
+            for j in liste:
+                print(j)
+
+
+
     def viewing(table, email, website):
         csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
-        if not os.path.exists("stockage"):
+        if not os.path.exists("stockage"): #maybe need to change it later
             print("ERROR: make sure to have a stockage file")
             sys.exit()
         else:
             #if email isn't put
             if email == "pass":
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if website in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            mail = split[1]
-                            passw = code.decoding_password(passwrd,table)
-                            print(f"{mail} {website} {passw}")
-
+                var = website  
+                search = "website"            
+           
             #if website isn't put
             elif website == "pass":
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if email in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            wbst = split[2]
-                            passw = code.decoding_password(passwrd,table)
-                            print(f"{email} {wbst} {passw}")
-
+                var = email
+                search = "email"
+ 
+            #if both of them are put
             else:
-                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
-                    for i in file:
-                        if email in i and website in i:
-                            split = i.split(",")
-                            passwrd = split[0]
-                            mail = split[1]
-                            wbst = split[2]
-                            passw = code.decoding_password(passwrd, table)
-                            print(f"{mail} {wbst} {passw}")
+                var = f"{email},{website}"
+                search = "both"
+
+            view.read_file(csv_file, var, table, search)
+
