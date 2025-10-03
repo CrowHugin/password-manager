@@ -69,19 +69,21 @@ class code():
     
 class stockage:
     def stockage(mdp, email, website):
-        csv_file = "./stockage/stock.csv"
+        csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
 
-        if not os.path.exists("stockage"):
-            os.system("mkdir ./stockage")
-        
+        if os.path.exists(csv_file):
+            with open(f"{csv_file}/stock.csv", 'a', newline='', encoding="UTF-8") as file:
+                file.write(f"\n{mdp},{email},{website}")
+
         if not os.path.exists(csv_file):
-            with open(csv_file, 'w', newline='', encoding="UTF-8") as file:
+            os.system(f"mkdir -p {csv_file}")
+
+            with open(f"{csv_file}/stock.csv", 'w', newline='', encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "website"])
                 file.write(f"{mdp},{email},{website}")
-        if os.path.exists(csv_file):
-            with open(csv_file, 'a', newline='', encoding="UTF-8") as file:
-                file.write(f"\n{mdp},{email},{website}")
+
+
 
 class password_crea():
     def input_user():
@@ -114,14 +116,14 @@ class password_crea():
                 
 class view():    
     def viewing(table, email, website):
-        csv_file = "./stockage/stock.csv"
+        csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
         if not os.path.exists("stockage"):
             print("ERROR: make sure to have a stockage file")
             sys.exit()
         else:
             #if email isn't put
             if email == "pass":
-                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
                     for i in file:
                         if website in i:
                             split = i.split(",")
@@ -132,7 +134,7 @@ class view():
 
             #if website isn't put
             elif website == "pass":
-                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
                     for i in file:
                         if email in i:
                             split = i.split(",")
@@ -142,7 +144,7 @@ class view():
                             print(f"{email} {wbst} {passw}")
 
             else:
-                with open(csv_file, 'r', newline='',encoding="UTF-8") as file:
+                with open(f"{csv_file}/stock.csv", 'r', newline='',encoding="UTF-8") as file:
                     for i in file:
                         if email in i and website in i:
                             split = i.split(",")
