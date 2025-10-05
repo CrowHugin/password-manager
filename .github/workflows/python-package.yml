@@ -1,21 +1,27 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+name: Password manager tests
 
-variables:
+on:  
+  push:
+  pull_request:
 
-image: python3.13.2
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-before scritp:
-    - pip import pylint
+    steps:
+      - name: Code
+        uses: actions/checkout@v4
 
-test:
-  script:
-    #testing the syntaxe
-    - pylint ./main.py
-    - pylint ./test_fonctions.py
-    - pylint ./ressources/ressources.py
+      - name: Installing python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - ./main.py
-    - ./test_fontions.py
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-
+      - name: Lancer pytest
+        run: pytest --maxfail=3 --disable-warnings
