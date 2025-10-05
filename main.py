@@ -89,7 +89,13 @@ Please provide --email or --password with --view""")
             sys.exit()
 
     elif args.create:
+        loop = True
         lenght = int(args.create)
+        if lenght > 20 or 0 > lenght: 
+            print("""The password cannot be longer than 20 caratere
+please retry""")
+            sys.exit()
+
         passe = users.create(printable,lenght)
         passe = "".join(passe)
         print(f"password: {passe}")
