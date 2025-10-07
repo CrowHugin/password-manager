@@ -1,13 +1,10 @@
 #! /bin/python3
 
 # from ressources import users, password, code,stockage
-from ressources.ressources import password, view, users
 import argparse
 import string
 import sys
-import os
-
-
+from ressources.ressources import password, view, users
 #remove tabs, newlines, carriage returns, vertical tab, form feed, and space.
 to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
 printable = ''.join(ch for ch in string.printable if ch not in to_remove)
@@ -27,7 +24,8 @@ def parsing():
 
     parser.add_argument("--create",
                         "-c",
-                        help = "to enable the creation od the password, put here your password lenght",
+                        help = "to enable the creation od the password,\
+                        put here your password lenght",
                         action = "store")
 
     parser.add_argument("--email",
@@ -39,7 +37,7 @@ def parsing():
                         "-p",
                         help = "to put a password",
                         action = "store")
-    
+
     parser.add_argument("--website",
                         "-w",
                         help = "Put a website here",
@@ -49,19 +47,17 @@ def parsing():
     arguments = parser.parse_args()
     return arguments
 
-def check(email,password,website):
-    if email and password and website:
-        return True
-    else:
-        return False
-    
+def check(mail,passwrd,website):
+    return bool(mail and passwrd and website)
+
+
 
 
 #main function
 if __name__ == "__main__":
     args = parsing()
     if args.view:
-        if check(args.email,"password",args.website) == True:
+        if check(args.email,"password",args.website) is True:
             view.viewing(printable, args.email, args.website)
         else:
             if not args.email and args.website:
@@ -76,14 +72,14 @@ Please provide --email or --password with --view""")
                 sys.exit()
 
     elif args.add:
-        if check(args.email, args.password, args.website) == True:
-            password.put_password(printable, args.email, args.password, 
+        if check(args.email, args.password, args.website) is True:
+            password.put_password(printable, args.email, args.password,
                                   args.website)
         else:
             if not args.email:
                 print("ERROR: Missing required email")
             elif not args.website:
-                print("ERROR: Missing required website") 
+                print("ERROR: Missing required website")
             elif not args.password:
                 print("ERROR: Missing required password")
             sys.exit()
@@ -91,7 +87,7 @@ Please provide --email or --password with --view""")
     elif args.create:
         loop = True
         lenght = int(args.create)
-        if lenght > 20 or 0 > lenght: 
+        if lenght > 20 or 0 > lenght:
             print("""The password cannot be longer than 20 caratere
 please retry""")
             sys.exit()
@@ -100,13 +96,13 @@ please retry""")
         passe = "".join(passe)
         print(f"password: {passe}")
         email, wbsti = users.save_info()
-        if check(email,passe,wbsti) == True:
+        if check(email,passe,wbsti) is True:
             password.put_password(printable,email,passe,wbsti)
-    
+
 
 
     else:
-        print("""ERROR: 
+        print("""ERROR:
     use --view (-v), --add (-a) or --create (-c)
     with the following options:
         --email(-em), --password (-p) and/or --website (-w)""")
