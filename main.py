@@ -4,11 +4,10 @@
 import argparse
 import string
 import sys
-from ressources.ressources import password, view, users
+from ressources.ressources import view, users, code, stockage
 #remove tabs, newlines, carriage returns, vertical tab, form feed, and space.
 to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
 printable = ''.join(ch for ch in string.printable if ch not in to_remove)
-
 
 def parsing():
     parser = argparse.ArgumentParser()
@@ -73,8 +72,8 @@ Please provide --email or --password with --view""")
 
     elif args.add:
         if check(args.email, args.password, args.website) is True:
-            password.put_password(printable, args.email, args.password,
-                                  args.website)
+            cd_pas = code.coding_password(args.password, printable)
+            stockage.stockage(cd_pas, args.email,args.website)
         else:
             if not args.email:
                 print("ERROR: Missing required email")
@@ -93,10 +92,12 @@ please retry""")
 
         passe = users.create(printable,lenght)
         passe = "".join(passe)
-        print(f"password: {passe}")
+        passwd = code.coding_password(passe, printable)
+        print(f"password: {passwd}")
         email, wbsti = users.save_info()
         if check(email,passe,wbsti) is True:
-            password.put_password(printable,email,passe,wbsti)
+            stockage.stockage(passwd,email,wbsti)
+
 
 
 

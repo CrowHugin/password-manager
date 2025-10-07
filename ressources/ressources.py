@@ -6,13 +6,6 @@ import csv
 import os
 
 
-class password():
-    @staticmethod
-    def put_password(printable, email, mdp, website):
-        coded_password=code.coding_password(mdp,printable)
-        stockage.stockage(coded_password,email,website)
-        return coded_password
-
 class users():
     @staticmethod
     def create(printable,lenght):
