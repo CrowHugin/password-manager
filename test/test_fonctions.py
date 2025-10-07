@@ -1,5 +1,7 @@
 #! /bin/python3
-
+"""
+    module to test some functions
+"""
 
 import sys
 import os
@@ -13,11 +15,11 @@ to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
 printable = ''.join(ch for ch in string.printable if ch not in to_remove)
 
 
-class Test_code(unittest.TestCase):
+class test_code(unittest.TestCase):
     def test_coding(self):
-        coded_password = code.coding_password("test",printable) 
+        coded_password = code.coding_password("test",printable)
         self.assertEqual(coded_password,"vguv")
-    
+
     def test_decoding(self):
         decoded_password = code.decoding_password("vguv",printable)
         self.assertEqual(decoded_password,"test")
