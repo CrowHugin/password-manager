@@ -11,6 +11,7 @@ class password():
     def put_password(printable, email, mdp, website):
         coded_password=code.coding_password(mdp,printable)
         stockage.stockage(coded_password,email,website)
+        return coded_password
 
 class users():
     @staticmethod
@@ -48,8 +49,14 @@ class code():
         coded_password_list = []
         for cara in passwrd:
             if cara in table:
-                ind = table.index(cara)
-                coded_password_list.append(table[ind+2])
+                if cara not in ("}","~"):
+                    ind = table.index(cara)
+                    coded_password_list.append(table[ind+2])
+                else:
+                    if cara == "}":
+                        coded_password_list.append("0")
+                    elif cara == "~":
+                        coded_password_list.append("1")
         coded_password = "".join(coded_password_list)
         return coded_password
 
