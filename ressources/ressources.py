@@ -42,7 +42,7 @@ class code():
         coded_password_list = []
         for cara in passwrd:
             if cara in table:
-                if cara not in ("}","~"):
+                if cara not in ("}","~",","):
                     ind = table.index(cara)
                     coded_password_list.append(table[ind+2])
                 else:
@@ -50,6 +50,9 @@ class code():
                         coded_password_list.append("0")
                     elif cara == "~":
                         coded_password_list.append("1")
+                    elif cara ==",":
+                        coded_password_list.append(".")
+
         coded_password = "".join(coded_password_list)
         return coded_password
 
