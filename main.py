@@ -49,6 +49,48 @@ def parsing():
 def check(mail,passwrd,website):
     return bool(mail and passwrd and website)
 
+def view_(eml,passs, wbs):
+    if check(eml,passs,wbs) is True:
+        view.viewing(printable, eml, wbs)
+    else:
+        if not eml and wbs:
+            print(f"Showing info for {wbs}")
+            view.viewing(printable,"pass", wbs)
+        elif not wbs and eml:
+            print(f"Showing info for {eml}")
+            view.viewing(printable,eml, "pass")
+        else:
+            print("""ERROR:
+    Please provide --email or --password with --view""")
+            sys.exit()
+
+def add_(eml,passwrd,website):
+    if check(eml, passwrd, website) is True:
+        cd_pas = code.coding_password(passwrd, printable)
+        stockage.stockage(cd_pas, eml,website)
+    else:
+        if not eml:
+            print("ERROR: Missing required email")
+        elif not website:
+            print("ERROR: Missing required website")
+        elif not passwrd:
+            print("ERROR: Missing required password")
+        sys.exit()
+
+def create_(crt):
+    lenght = int(crt)
+    if lenght > 20 or 0 > lenght:
+        print("""The password cannot be longer than 20 caratere
+please retry""")
+        sys.exit()
+
+    passe = users.create(printable,lenght)
+    passe_ = "".join(passe)
+    print(f"password: {passe_}")
+    email, wbsti = users.save_info()
+    if check(email,passe,wbsti) is True:
+        cdc_pass = code.coding_password(passe_,printable)
+        stockage.stockage(cdc_pass,email,wbsti)
 
 
 
@@ -56,50 +98,13 @@ def check(mail,passwrd,website):
 if __name__ == "__main__":
     args = parsing()
     if args.view:
-        if check(args.email,"password",args.website) is True:
-            view.viewing(printable, args.email, args.website)
-        else:
-            if not args.email and args.website:
-                print(f"Showing info for {args.website}")
-                view.viewing(printable,"pass", args.website)
-            elif not args.website and args.email:
-                print(f"Showing info for {args.email}")
-                view.viewing(printable,args.email, "pass")
-            else:
-                print("""ERROR:
-Please provide --email or --password with --view""")
-                sys.exit()
+        view_(args.email,"password",args.website)
 
     elif args.add:
-        if check(args.email, args.password, args.website) is True:
-            cd_pas = code.coding_password(args.password, printable)
-            stockage.stockage(cd_pas, args.email,args.website)
-        else:
-            if not args.email:
-                print("ERROR: Missing required email")
-            elif not args.website:
-                print("ERROR: Missing required website")
-            elif not args.password:
-                print("ERROR: Missing required password")
-            sys.exit()
+        add_(args.email,args.password,args.website)
 
     elif args.create:
-        lenght = int(args.create)
-        if lenght > 20 or 0 > lenght:
-            print("""The password cannot be longer than 20 caratere
-please retry""")
-            sys.exit()
-
-        passe = users.create(printable,lenght)
-        passe = "".join(passe)
-        passwd = code.coding_password(passe, printable)
-        print(f"password: {passwd}")
-        email, wbsti = users.save_info()
-        if check(email,passe,wbsti) is True:
-            stockage.stockage(passwd,email,wbsti)
-
-
-
+        create_(args.create)
 
     else:
         print("""ERROR:
