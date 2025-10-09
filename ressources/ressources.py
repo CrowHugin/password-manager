@@ -71,9 +71,22 @@ class stockage():
     @staticmethod
     def stockage(mdp, email, website,csv_file):
         if os.path.exists(csv_file):
-            with open(f"{csv_file}/stock.csv", 'a', newline='',
+            with open(f"{csv_file}/stock.csv", 'r', newline='',
                       encoding="UTF-8") as file:
-                file.write(f"\n{mdp},{email},{website}")
+                for elements in file:
+                    print(elements)
+                    split = elements.split(",")
+                    check_passw = split[0]
+                    check_email = split[1]
+                    check_wbsti = split[2]
+                    if check_email == email and check_wbsti == website:
+                        print("""\nERROR
+Cannot put the same email adress for the same password more than once""")
+                        sys.exit()
+
+            with open(f"{csv_file}/stock.csv","a",newline='',
+                      encoding="UTF-8") as file:
+                file.write(f"{mdp},{email},{website}")
 
         if not os.path.exists(csv_file):
             os.system(f"mkdir -p {csv_file}")
@@ -82,7 +95,7 @@ class stockage():
                       encoding="UTF-8") as file:
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "email", "website"])
-                file.write(f"\n{mdp},{email},{website}")
+                file.write(f"{mdp},{email},{website}")
 
 
 
