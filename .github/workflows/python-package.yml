@@ -29,7 +29,3 @@ jobs:
       - name: module deployment
         run:  |
           pyinstaller -F ./main.py
-
-      - name: Moving module
-        run: |
-          mv ./dist/main ./password_manager
