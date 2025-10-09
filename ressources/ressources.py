@@ -42,6 +42,7 @@ class code():
         coded_password_list = []
         for cara in passwrd:
             if cara in table:
+                # } and ~ are the last two of the list and , is the separator inside the password file 
                 if cara not in ("}","~",","):
                     ind = table.index(cara)
                     coded_password_list.append(table[ind+2])
@@ -68,9 +69,7 @@ class code():
 
 class stockage():
     @staticmethod
-    def stockage(mdp, email, website):
-        csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
-
+    def stockage(mdp, email, website,csv_file):
         if os.path.exists(csv_file):
             with open(f"{csv_file}/stock.csv", 'a', newline='',
                       encoding="UTF-8") as file:
@@ -90,9 +89,9 @@ class stockage():
 
 class view():
     @staticmethod
-    def read_file(file, variable, prtable,wnt_srch):
+    def read_file(file, variable, prtable,wnt_srch, pfile):
         liste = []
-        with open(f"{file}/stock.csv", 'r', newline='',
+        with open(f"{pfile}/stock.csv", 'r', newline='',
                   encoding="UTF-8") as f:
             for i in f:
                 if variable in i:
@@ -116,8 +115,7 @@ class view():
 
 
     @staticmethod
-    def viewing(table, email, website):
-        csv_file = os.path.join(os.path.expanduser('~'),'password-manager')
+    def viewing(table, email, website, csv_file):
         if not os.path.exists(csv_file): #maybe need to change it later
             print("ERROR: make sure to have a stockage file")
             sys.exit()
@@ -137,4 +135,4 @@ class view():
                 var = f"{email},{website}"
                 search = "both"
 
-            view.read_file(csv_file, var, table, search)
+            view.read_file(csv_file, var, table, search,csv_file)
