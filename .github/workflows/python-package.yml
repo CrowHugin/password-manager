@@ -27,9 +27,8 @@ jobs:
 
       - name: run pylint 
         run: |
-          pylint . ressources 
+          pylint  main.py ressources/ressources.py
 
       - name: module deployment
         run:  |
           pyinstaller -F ./main.py
-
