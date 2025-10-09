@@ -42,7 +42,8 @@ class code():
         coded_password_list = []
         for cara in passwrd:
             if cara in table:
-                # } and ~ are the last two of the list and , is the separator inside the password file 
+                # } and ~ are the last two of the list
+                # and , is the separator inside the password file
                 if cara not in ("}","~",","):
                     ind = table.index(cara)
                     coded_password_list.append(table[ind+2])
@@ -74,9 +75,8 @@ class stockage():
             with open(f"{csv_file}/stock.csv", 'r', newline='',
                       encoding="UTF-8") as file:
                 for elements in file:
-                    print(elements)
                     split = elements.split(",")
-                    check_passw = split[0]
+
                     check_email = split[1]
                     check_wbsti = split[2]
                     if check_email == email and check_wbsti == website:
@@ -102,9 +102,9 @@ Cannot put the same email adress for the same password more than once""")
 
 class view():
     @staticmethod
-    def read_file(file, variable, prtable,wnt_srch, pfile):
+    def read_file(file, variable, prtable,wnt_srch):
         liste = []
-        with open(f"{pfile}/stock.csv", 'r', newline='',
+        with open(f"{file}/stock.csv", 'r', newline='',
                   encoding="UTF-8") as f:
             for i in f:
                 if variable in i:
@@ -148,4 +148,4 @@ class view():
                 var = f"{email},{website}"
                 search = "both"
 
-            view.read_file(csv_file, var, table, search,csv_file)
+            view.read_file(csv_file, var, table, search)
