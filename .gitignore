@@ -1,2 +1,5 @@
 stockage
 ressources/__pycache__
+*.spec
+build/
+dist/
