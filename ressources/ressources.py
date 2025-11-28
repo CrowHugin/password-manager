@@ -1,9 +1,11 @@
 #! /bin/python3
 
 import random
+import json
 import sys
 import csv
 import os
+
 
 
 class users():
@@ -70,7 +72,33 @@ class code():
 
 class stockage():
     @staticmethod
-    def stockage(mdp, email, website,csv_file):
+    def stockage(mdp, email, website,path_file):
+
+
+        if os.path.exists(f"{path_file}/index.json"):
+            data = {
+                    "website":f"{website}",
+                    "email":f"{email}",
+                    "password":f"{mdp}"
+            }
+            with open(f"{path_file}/index.json","r+",encoding="UTF-8") as f:
+                file_data = json.load(f)
+                file_data["infos"].append(data)
+                f.seek(0)
+                json.dump(file_data,f,indent=4)
+
+
+
+        elif not os.path.exists(f"{path_file}/index.json"):
+            os.system(f"mkdir {path_file}")
+            with open(f"{path_file}/index.json", 'w', encoding="UTF-8") as f:
+                data_start={
+                        "infos":[]
+                }
+                json.dump(data_start,f,indent=4)
+
+
+"""
         if os.path.exists(csv_file):
             with open(f"{csv_file}/stock.csv", 'r', newline='',
                       encoding="UTF-8") as file:
@@ -80,8 +108,8 @@ class stockage():
                     check_email = split[1]
                     check_wbsti = split[2]
                     if check_email == email and check_wbsti == website:
-                        print("""\nERROR
-Cannot put the same email adress for the same password more than once""")
+                        print('''\nERROR
+Cannot put the same email adress for the same password more than once''')
                         sys.exit()
 
             with open(f"{csv_file}/stock.csv","a",newline='',
@@ -96,7 +124,7 @@ Cannot put the same email adress for the same password more than once""")
                 writer = csv.writer(file, delimiter=',')
                 writer.writerow(["mdp", "email", "website"])
                 file.write(f"{mdp},{email},{website}")
-
+"""
 
 
 

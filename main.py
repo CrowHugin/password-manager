@@ -107,7 +107,6 @@ if __name__ == "__main__":
     #only for tests
     if args.path:
         path_file = args.path
-        print(path_file)
     else:
         path_file = os.path.join(os.path.expanduser('~'),'password-manager')
 
