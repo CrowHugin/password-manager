@@ -9,7 +9,6 @@ from ressources.ressources import view, users, code, stockage
 #remove tabs, newlines, carriage returns, vertical tab, form feed, and space.
 to_remove = ["\t", "\n", "\r", "\x0b", "\x0c", " "]
 printable = ''.join(ch for ch in string.printable if ch not in to_remove)
-path_file = os.path.join(os.path.expanduser('~'),'password-manager')
 
 
 def parsing():
@@ -45,6 +44,10 @@ put here your password lenght",
                         help = "Put a website here",
                         action = "store")
 
+    parser.add_argument("--path",
+                        "-path",
+                        help = "Don't use it, only for tests",
+                        action = "store")
 
     arguments = parser.parse_args()
     return arguments
@@ -100,6 +103,15 @@ please retry""")
 #main function
 if __name__ == "__main__":
     args = parsing()
+
+    #only for tests
+    if args.path:
+        path_file = args.path
+        print(path_file)
+    else:
+        path_file = os.path.join(os.path.expanduser('~'),'password-manager')
+
+
     if args.view:
         view_(args.email,"password",args.website,path_file)
 
