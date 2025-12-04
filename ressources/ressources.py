@@ -70,61 +70,51 @@ class code():
                 user_password = user_password.replace(i,new_cara)
         return user_password
 
+
+class json_functions():
+    @staticmethod
+    def write_json(path_file_):
+        os.system(f"mkdir {path_file_}")
+        with open(f"{path_file_}/index.json", 'w', encoding="UTF-8") as f:
+            data_start={
+                    "infos":[]
+            }
+            json.dump(data_start,f,indent=4)
+
+    @staticmethod
+    def add_json(passwrd,email_,website_, path_file_):
+
+        data = {
+                "website":f"{website_}",
+                "email":f"{email_}",
+                "password":f"{passwrd}"
+        }
+
+        with open(f"{path_file_}/index.json","r+",encoding="UTF-8") as f:
+            file_data = json.load(f)
+            file_data["infos"].append(data)
+            f.seek(0)
+            json.dump(file_data,f,indent=4)
+
+    @staticmethod
+    def read_json():
+        pass
+
+
+    @staticmethod
+    def check_json():
+        pass
+
 class stockage():
     @staticmethod
     def stockage(mdp, email, website,path_file):
-
-
         if os.path.exists(f"{path_file}/index.json"):
-            data = {
-                    "website":f"{website}",
-                    "email":f"{email}",
-                    "password":f"{mdp}"
-            }
-            with open(f"{path_file}/index.json","r+",encoding="UTF-8") as f:
-                file_data = json.load(f)
-                file_data["infos"].append(data)
-                f.seek(0)
-                json.dump(file_data,f,indent=4)
-
-
+            json_functions.add_json(mdp,email,website,path_file)
 
         elif not os.path.exists(f"{path_file}/index.json"):
-            os.system(f"mkdir {path_file}")
-            with open(f"{path_file}/index.json", 'w', encoding="UTF-8") as f:
-                data_start={
-                        "infos":[]
-                }
-                json.dump(data_start,f,indent=4)
+            json_functions.write_json(path_file)
+            json_functions.add_json(mdp,email,website,path_file)
 
-
-"""
-        if os.path.exists(csv_file):
-            with open(f"{csv_file}/stock.csv", 'r', newline='',
-                      encoding="UTF-8") as file:
-                for elements in file:
-                    split = elements.split(",")
-
-                    check_email = split[1]
-                    check_wbsti = split[2]
-                    if check_email == email and check_wbsti == website:
-                        print('''\nERROR
-Cannot put the same email adress for the same password more than once''')
-                        sys.exit()
-
-            with open(f"{csv_file}/stock.csv","a",newline='',
-                      encoding="UTF-8") as file:
-                file.write(f"{mdp},{email},{website}")
-
-        if not os.path.exists(csv_file):
-            os.system(f"mkdir -p {csv_file}")
-
-            with open(f"{csv_file}/stock.csv", 'w', newline='',
-                      encoding="UTF-8") as file:
-                writer = csv.writer(file, delimiter=',')
-                writer.writerow(["mdp", "email", "website"])
-                file.write(f"{mdp},{email},{website}")
-"""
 
 
 
