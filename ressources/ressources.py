@@ -70,8 +70,8 @@ class code():
                 user_password = user_password.replace(i,new_cara)
         return user_password
 
+class json_functions(): 
 
-class json_functions():
     @staticmethod
     def write_json(path_file_):
         os.system(f"mkdir {path_file_}")
@@ -97,13 +97,15 @@ class json_functions():
             json.dump(file_data,f,indent=4)
 
     @staticmethod
-    def read_json():
-        pass
-
-
-    @staticmethod
-    def check_json():
-        pass
+    def read_json(table,eml,wbs,file_):
+        with open(f"{file_}/index.json","r",encoding="utf-8") as f:
+            data = json.load(f)
+            return_data=[]
+            for i in range (0,len(data["infos"])):
+                return_data.append(data["infos"][i]["website"])
+                return_data.append(data["infos"][i]["email"])
+                return_data.append(data["infos"][i]["password"])
+            return return_data
 
 class stockage():
     @staticmethod
@@ -115,55 +117,14 @@ class stockage():
             json_functions.write_json(path_file)
             json_functions.add_json(mdp,email,website,path_file)
 
-
-
-
 class view():
     @staticmethod
+    # peut-être plus nécessaire
     def read_file(file, variable, prtable,wnt_srch):
-        liste = []
-        with open(f"{file}/stock.csv", 'r', newline='',
-                  encoding="UTF-8") as f:
-            for i in f:
-                if variable in i:
-                    split = i.split(",")
-                    passwrd = split[0]
-                    mail = split[1]
-                    wbst = split[2].replace("\n"," ")
-                    passw = code.decoding_password(passwrd,prtable)
-                    if wnt_srch == "email":
-                        liste.append(wbst)
-                        liste.append(passw)
-
-                    elif wnt_srch == "website":
-                        liste.append(mail)
-                        liste.append(passw)
-                    elif wnt_srch == "both":
-                        liste.append(passw)
-
-            for j in liste:
-                print(j)
+        pass
 
 
     @staticmethod
-    def viewing(table, email, website, csv_file):
-        if not os.path.exists(csv_file): #maybe need to change it later
-            print("ERROR: make sure to have a stockage file")
-            sys.exit()
-        else:
-            #if email isn't put
-            if email == "pass":
-                var = website
-                search = "website"
-
-            #if website isn't put
-            elif website == "pass":
-                var = email
-                search = "email"
-
-            #if both of them are put
-            else:
-                var = f"{email},{website}"
-                search = "both"
-
-            view.read_file(csv_file, var, table, search)
+    def viewing(table, email, website,file):
+        datafile = json_functions.read_json(table,email,website,file)
+        print(datafile)
