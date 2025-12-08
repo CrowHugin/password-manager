@@ -57,6 +57,7 @@ def check(mail,passwrd,website):
 
 def view_(eml,passs, wbs, file):
     if check(eml,passs,wbs) is True:
+        print(f"Showing infos for {wbs} and {eml}")
         view.viewing(printable, eml, wbs, file)
     else:
         if not eml and wbs: #if there's not an email but if there is a website

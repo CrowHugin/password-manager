@@ -97,15 +97,10 @@ class json_functions():
             json.dump(file_data,f,indent=4)
 
     @staticmethod
-    def read_json(table,eml,wbs,file_):
+    def load_json(file_):
         with open(f"{file_}/index.json","r",encoding="utf-8") as f:
             data = json.load(f)
-            return_data=[]
-            for i in range (0,len(data["infos"])):
-                return_data.append(data["infos"][i]["website"])
-                return_data.append(data["infos"][i]["email"])
-                return_data.append(data["infos"][i]["password"])
-            return return_data
+            return data
 
 class stockage():
     @staticmethod
@@ -118,13 +113,31 @@ class stockage():
             json_functions.add_json(mdp,email,website,path_file)
 
 class view():
-    @staticmethod
-    # peut-être plus nécessaire
-    def read_file(file, variable, prtable,wnt_srch):
-        pass
-
 
     @staticmethod
     def viewing(table, email, website,file):
-        datafile = json_functions.read_json(table,email,website,file)
-        print(datafile)
+        datafile = json_functions.load_json(file)
+        for i in datafile["infos"]:
+            website_ = i["website"]
+            email_ = i["email"]
+            password_ = code.decoding_password(i["password"],table)
+
+            #if -w is used with -v
+            if email == "pass":
+                if website_ == website:
+                    print(f"email: {email_}")
+                    print(f"password: {password_}")
+        
+            #if -em is used with -v
+            elif website == "pass":
+                    if email_ == email:
+                        print(f"website: {website_}")
+                        print(f"password: {password_}")
+        
+        # if email and website are true
+        # see in main.py's view_ function
+            elif website_ != "pass" and email != "pass":
+                if website_ == website and email_ == email:
+                    print("test")
+                    print(f"password: {password_}")
+
