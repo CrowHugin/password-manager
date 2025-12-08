@@ -59,10 +59,10 @@ def view_(eml,passs, wbs, file):
     if check(eml,passs,wbs) is True:
         view.viewing(printable, eml, wbs, file)
     else:
-        if not eml and wbs:
+        if not eml and wbs: #if there's not an email but if there is a website
             print(f"Showing info for {wbs}")
             view.viewing(printable,"pass", wbs,file)
-        elif not wbs and eml:
+        elif not wbs and eml:#if there's not a website but if there is an email
             print(f"Showing info for {eml}")
             view.viewing(printable,eml, "pass",file)
         else:
