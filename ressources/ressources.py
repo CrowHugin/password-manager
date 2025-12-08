@@ -3,7 +3,6 @@
 import random
 import json
 import sys
-import csv
 import os
 
 
@@ -70,7 +69,7 @@ class code():
                 user_password = user_password.replace(i,new_cara)
         return user_password
 
-class json_functions(): 
+class json_functions():
 
     @staticmethod
     def write_json(path_file_):
@@ -127,17 +126,16 @@ class view():
                 if website_ == website:
                     print(f"email: {email_}")
                     print(f"password: {password_}")
-        
+
             #if -em is used with -v
             elif website == "pass":
-                    if email_ == email:
-                        print(f"website: {website_}")
-                        print(f"password: {password_}")
-        
+                if email_ == email:
+                    print(f"website: {website_}")
+                    print(f"password: {password_}")
+
         # if email and website are true
         # see in main.py's view_ function
             elif website_ != "pass" and email != "pass":
                 if website_ == website and email_ == email:
                     print("test")
                     print(f"password: {password_}")
-
