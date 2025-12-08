@@ -1,9 +1,10 @@
 #! /bin/python3
 
 import random
+import json
 import sys
-import csv
 import os
+
 
 
 class users():
@@ -68,84 +69,73 @@ class code():
                 user_password = user_password.replace(i,new_cara)
         return user_password
 
+class json_functions():
+
+    @staticmethod
+    def write_json(path_file_):
+        os.system(f"mkdir {path_file_}")
+        with open(f"{path_file_}/index.json", 'w', encoding="UTF-8") as f:
+            data_start={
+                    "infos":[]
+            }
+            json.dump(data_start,f,indent=4)
+
+    @staticmethod
+    def add_json(passwrd,email_,website_, path_file_):
+
+        data = {
+                "website":f"{website_}",
+                "email":f"{email_}",
+                "password":f"{passwrd}"
+        }
+
+        with open(f"{path_file_}/index.json","r+",encoding="UTF-8") as f:
+            file_data = json.load(f)
+            file_data["infos"].append(data)
+            f.seek(0)
+            json.dump(file_data,f,indent=4)
+
+    @staticmethod
+    def load_json(file_):
+        with open(f"{file_}/index.json","r",encoding="utf-8") as f:
+            data = json.load(f)
+            return data
+
 class stockage():
     @staticmethod
-    def stockage(mdp, email, website,csv_file):
-        if os.path.exists(csv_file):
-            with open(f"{csv_file}/stock.csv", 'r', newline='',
-                      encoding="UTF-8") as file:
-                for elements in file:
-                    split = elements.split(",")
+    def stockage(mdp, email, website,path_file):
+        if os.path.exists(f"{path_file}/index.json"):
+            json_functions.add_json(mdp,email,website,path_file)
 
-                    check_email = split[1]
-                    check_wbsti = split[2]
-                    if check_email == email and check_wbsti == website:
-                        print("""\nERROR
-Cannot put the same email adress for the same password more than once""")
-                        sys.exit()
-
-            with open(f"{csv_file}/stock.csv","a",newline='',
-                      encoding="UTF-8") as file:
-                file.write(f"{mdp},{email},{website}")
-
-        if not os.path.exists(csv_file):
-            os.system(f"mkdir -p {csv_file}")
-
-            with open(f"{csv_file}/stock.csv", 'w', newline='',
-                      encoding="UTF-8") as file:
-                writer = csv.writer(file, delimiter=',')
-                writer.writerow(["mdp", "email", "website"])
-                file.write(f"{mdp},{email},{website}")
-
-
-
+        elif not os.path.exists(f"{path_file}/index.json"):
+            json_functions.write_json(path_file)
+            json_functions.add_json(mdp,email,website,path_file)
 
 class view():
-    @staticmethod
-    def read_file(file, variable, prtable,wnt_srch):
-        liste = []
-        with open(f"{file}/stock.csv", 'r', newline='',
-                  encoding="UTF-8") as f:
-            for i in f:
-                if variable in i:
-                    split = i.split(",")
-                    passwrd = split[0]
-                    mail = split[1]
-                    wbst = split[2].replace("\n"," ")
-                    passw = code.decoding_password(passwrd,prtable)
-                    if wnt_srch == "email":
-                        liste.append(wbst)
-                        liste.append(passw)
-
-                    elif wnt_srch == "website":
-                        liste.append(mail)
-                        liste.append(passw)
-                    elif wnt_srch == "both":
-                        liste.append(passw)
-
-            for j in liste:
-                print(j)
-
 
     @staticmethod
-    def viewing(table, email, website, csv_file):
-        if not os.path.exists(csv_file): #maybe need to change it later
-            print("ERROR: make sure to have a stockage file")
-            sys.exit()
-        else:
-            #if email isn't put
+    def viewing(table, email, website,file):
+        datafile = json_functions.load_json(file)
+        for i in datafile["infos"]:
+            website_ = i["website"]
+            email_ = i["email"]
+            password_ = code.decoding_password(i["password"],table)
+
+            #if -w is used with -v
             if email == "pass":
-                var = website
-                search = "website"
+                if website_ == website:
+                    print(f"email: {email_}")
+                    print(f"password: {password_}")
 
-            #if website isn't put
+            #if -em is used with -v
             elif website == "pass":
-                var = email
-                search = "email"
+                if email_ == email:
+                    print(f"website: {website_}")
+                    print(f"password: {password_}")
 
-            #if both of them are put
-            else:
-                var = f"{email},{website}"
-                search = "both"
-
-            view.read_file(csv_file, var, table, search)
+        # if email and website are true
+        # see in main.py's view_ function
+            elif website_ != "pass" and email != "pass":
+                if website_ == website and email_ == email:
+                    print("test")
+                    print(f"password: {password_}")
