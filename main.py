@@ -46,7 +46,8 @@ put here your password lenght",
 
     parser.add_argument("--dry_run",
                         "-drun",
-                        help = "Only for tests, the results will be in ./pass/index.json",
+                        help = "Only for tests, the results will be in\
+./pass/index.json",
                         action = "store_true")
 
     arguments = parser.parse_args()
@@ -107,7 +108,7 @@ if __name__ == "__main__":
 
     #only for tests
     if args.dry_run:
-        print("drun")
+        print("Used -drun")
         path_file = "./pass"
     else:
         path_file = os.path.join(os.path.expanduser('~'),'password-manager')
@@ -122,7 +123,11 @@ if __name__ == "__main__":
     elif args.create:
         create_(args.create,path_file)
 
-    elif not args.view and not args.add and not args.create and not args.dry_run:
+    elif(
+        not args.view
+        and not args.add
+        and not args.create
+            and not args.dry_run):
         print("""ERROR:
     use --view (-v), --add (-a) or --create (-c)
     with the following options:
