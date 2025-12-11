@@ -12,13 +12,13 @@ Then give it the permission to run with:
 chmod u+x ~/password_manager
 ```
 
-you can find the stored passwords within: 
+you can find the informations within: 
 `~/password_manager/index.json`
 
 ---
 ## How to use it:
 
-***There are three options you can use to use:***
+***There are three options you can use :***
 
 `-a` or `--add` to add an email, a password and a website into the storage file  
 `-v` or `--view` to view any required info  
@@ -37,7 +37,7 @@ This option will create a folder named `pass` inside the folder you launch the s
 
 ---
 
-Please remind  I'm still learning and this project isn't one to take too seriously.
+Please remember  I'm still learning and this project isn't one to take too seriously.
 
-I'm doing it because it's fun :)
+I'm doing it because it's fun and I wanna learn :)
 
