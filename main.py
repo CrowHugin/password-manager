@@ -44,10 +44,11 @@ put here your password lenght",
                         help = "Put a website here",
                         action = "store")
 
-    parser.add_argument("--path",
-                        "-path",
-                        help = "Don't use it, only for tests",
-                        action = "store")
+    parser.add_argument("--dry_run",
+                        "-drun",
+                        help = "Only for tests, the results will be in\
+./pass/index.json",
+                        action = "store_true")
 
     arguments = parser.parse_args()
     return arguments
@@ -106,8 +107,9 @@ if __name__ == "__main__":
     args = parsing()
 
     #only for tests
-    if args.path:
-        path_file = args.path
+    if args.dry_run:
+        print("Used -drun")
+        path_file = "./pass"
     else:
         path_file = os.path.join(os.path.expanduser('~'),'password-manager')
 
@@ -121,7 +123,11 @@ if __name__ == "__main__":
     elif args.create:
         create_(args.create,path_file)
 
-    else:
+    elif(
+        not args.view
+        and not args.add
+        and not args.create
+            and not args.dry_run):
         print("""ERROR:
     use --view (-v), --add (-a) or --create (-c)
     with the following options:

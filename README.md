@@ -1,12 +1,8 @@
-Project to learn python while doing a module
-
----
 ## how to set up:
 
 download the module inside the [release](https://github.com/CrowHugin/password-manager/releases/) page
 
-**On linux:**
-or use:
+Use:
 ```bash
 curl -L -o password_manager https://raw.githubusercontent.com/CrowHugin/password-manager/main/dist/main
 ```
@@ -17,29 +13,27 @@ chmod u+x ~/password_manager
 ```
 
 you can find the stored passwords within: 
-	~/password_manager/index.json
-
-
-**On Windows:**
-Isn't supported  yet but should work inside wsl2
-
+`~/password_manager/index.json`
 
 ---
 ## How to use it:
 
-There are three options you can use to use:
+***There are three options you can use to use:***
 
-	-a or --add to add an email, a password and a website into the storage file  
-	-v or --view to view any required info  
-	-c to create a password (must be less than 20 character long)
+`-a` or `--add` to add an email, a password and a website into the storage file  
+`-v` or `--view` to view any required info  
+`-c` or `--create` to create a password (must be less than 21 character long)
 
-these three options can / must be use with:
+***These three options can / must be use with:***
 
-	-em or --email to put an email within the options -a and-v  
-	-p or --password to put a password within the options -a and -v  
-	-w or --website to put a website within the options -a and -v
+`-em` or `--email` to put an email within the options `-a` and `-v`  
+`-p` or `--password` to put a password within the options `-a` and `-v`  
+`-w` or `--website` to put a website within the options `-a` and `-v`
 
+***Do not use:***
 
+`-drun` or `--dry_run` is only used for test.
+This option will create a folder named `pass` inside the folder you launch the script. 
 
 ---
 
